@@ -1,0 +1,256 @@
+{
+  "product": {
+    "nameKo": "마이클",
+    "nameEn": "MyClass",
+    "domain": "mycl.io",
+    "origin": "https://mycl.io"
+  },
+  "profileDir": "~/.mycl-profile",
+  "login": {
+    "entryUrl": "https://www.teacherville.co.kr/portal/memship/loginSSL.edu?svcType=8&isMyclApp=false&envType=op",
+    "successHost": "mycl.io",
+    "failure": {
+      "signupPath": "/signup",
+      "landingPath": "/landing",
+      "pricingHash": "#pricing",
+      "note": "저장된 로그인이 /signup?key=… 를 거쳐 /landing#pricing 으로 가면 실패다. 가입·결제 화면을 진행하지 않는다."
+    }
+  },
+  "sensitiveTokens": ["주민등록", "주민번호", "계좌번호"],
+  "actions": [
+    {
+      "id": "save",
+      "mode": "never",
+      "labels": ["저장", "문서 저장"],
+      "reason": "문서함 저장 창은 전체 공개가 기본이므로 저장을 누르지 않는다. 창이 열리면 취소로 닫는다."
+    },
+    {
+      "id": "neis",
+      "mode": "never",
+      "labels": ["나이스 반영하기", "나이스 반영하기 →"],
+      "reason": "나이스 반영하기는 누르지 않는다."
+    },
+    {
+      "id": "share",
+      "mode": "confirm",
+      "labels": ["공유"],
+      "reason": "공유는 사용자가 확인한 뒤에만 한다."
+    },
+    {
+      "id": "send",
+      "mode": "confirm",
+      "labels": ["발송"],
+      "reason": "발송은 사용자가 확인한 뒤에만 한다."
+    },
+    {
+      "id": "pay",
+      "mode": "confirm",
+      "labels": ["결제", "결제하기"],
+      "reason": "결제는 사용자가 확인한 뒤에만 한다."
+    },
+    {
+      "id": "subscribe",
+      "mode": "confirm",
+      "labels": ["구독", "구독 변경"],
+      "reason": "구독 변경은 사용자가 확인한 뒤에만 한다."
+    },
+    {
+      "id": "signup",
+      "mode": "confirm",
+      "labels": ["가입", "가입하기"],
+      "reason": "가입은 자동으로 진행하지 않는다."
+    },
+    {
+      "id": "delete",
+      "mode": "confirm",
+      "labels": ["삭제"],
+      "reason": "삭제는 사용자가 확인한 뒤에만 한다."
+    },
+    {
+      "id": "bulk-register",
+      "mode": "never",
+      "labels": ["일괄 등록"],
+      "reason": "일괄 등록은 누르지 않는다."
+    },
+    {
+      "id": "similarity-check",
+      "mode": "never",
+      "labels": ["유사도 검사"],
+      "reason": "유사도 검사는 누르지 않는다."
+    },
+    {
+      "id": "paste-all",
+      "mode": "confirm",
+      "labels": ["전체 붙여넣기"],
+      "reason": "전체 붙여넣기는 사용자가 요청한 뒤에만 한다."
+    },
+    {
+      "id": "download-visible",
+      "mode": "confirm",
+      "labels": ["내려받기"],
+      "reason": "내려받기는 사용자가 요청한 뒤에만 한다."
+    }
+  ],
+  "gajeongTongsin": {
+    "createUrl": "https://mycl.io/tool/create?seq=6",
+    "editorUrl": "https://mycl.io/v2/edit?seq=6&librarySeq={librarySeq}",
+    "librarySeqParam": "librarySeq",
+    "fields": {
+      "type": {
+        "label": "유형",
+        "control": "radio",
+        "options": ["신청", "안내"],
+        "defaultOption": "신청"
+      },
+      "title": {
+        "label": "제목",
+        "placeholder": "제목을 입력하세요.",
+        "maxLength": 50,
+        "required": true
+      },
+      "greeting": {
+        "label": "인사말",
+        "placeholder": "인사말을 입력하세요.",
+        "maxLength": 100,
+        "required": true
+      },
+      "message": {
+        "label": "전달사항",
+        "placeholder": "전달사항을 입력하세요.",
+        "maxLength": 1000,
+        "required": true
+      },
+      "multilingualQr": {
+        "label": "다국어 지원 QR 생성 (제공 언어 선택)",
+        "control": "checkbox",
+        "options": ["영어", "중국어", "베트남어", "태국어", "일본어", "캄보디아어", "필리핀어", "몽골어"],
+        "customPlaceholder": "추가 언어 직접 입력 (쉼표(,)로 구분)"
+      },
+      "privacyConsent": {
+        "label": "개인정보 제공 동의 포함 여부",
+        "control": "radio",
+        "options": ["포함", "미포함"],
+        "defaultOption": "미포함"
+      },
+      "notes": {
+        "label": "기타사항 (선택)",
+        "placeholder": "기타사항을 입력하세요.",
+        "maxLength": 1000,
+        "required": false
+      }
+    },
+    "buttons": {
+      "generate": { "visibleText": "자동 생성" },
+      "regenerate": { "visibleText": "재생성" }
+    },
+    "afterGenerate": {
+      "staysOnCreatePage": true,
+      "urlPattern": "/tool/create?seq=6&librarySeq={librarySeq}",
+      "editByButtonAccessibleName": "문서 편집",
+      "previewWaitNote": "미리보기가 나타나는 데 몇 초 걸린다. 편집이나 내려받기 전에 기다린다."
+    },
+    "resultChrome": {
+      "templateLabel": "선택 템플릿",
+      "templateDefault": "기본 템플릿 1"
+    }
+  },
+  "editor": {
+    "findReplace": {
+      "dialogTitle": "Find and Replace",
+      "openVisibleText": "Replace",
+      "findTab": "Find",
+      "replaceTab": "Replace",
+      "replaceAllVisibleText": "Replace All",
+      "replaceVisibleText": "Replace",
+      "findNextVisibleText": "Find Next",
+      "cancelVisibleText": "Cancel",
+      "changedMessage": "{count} items have been changed.",
+      "findField": { "labels": ["Find what:"] },
+      "replaceField": { "labels": ["Replace with:"] },
+      "searchLabel": "Search",
+      "searchDefault": "Whole Document",
+      "searchOptions": [
+        "Match case",
+        "Match half/full width forms",
+        "Find Whole words only",
+        "Ignore punctuation",
+        "Ignore white-space charcters"
+      ]
+    },
+    "saveDialog": {
+      "title": "저장하기",
+      "closeAccessibleName": "닫기",
+      "visibilityLabel": "공개 범위",
+      "visibilityOptions": ["전체 공개", "우리 학교", "나만 보기"],
+      "visibilityDefault": "전체 공개",
+      "collectionLabel": "자료담기",
+      "collectionOptions": ["담기 가능", "담기 불가능"],
+      "collectionDefault": "담기 가능",
+      "cancelVisibleText": "취소",
+      "confirmVisibleText": "저장"
+    },
+    "defaults": {
+      "schoolName": "박달초등학교",
+      "officeLabel": "교무실·행정실",
+      "phone": "02-3442-7783",
+      "faxLabel": "FAX",
+      "fax": "02-3442-7793",
+      "signature": "박달초등학교장 [직인생략]"
+    },
+    "download": {
+      "openVisibleText": "내려받기",
+      "openAccessibleName": "내려받기 옵션 열기",
+      "outputDir": "./out",
+      "preferredFormat": "hwp",
+      "fallbackFormat": "pdf",
+      "menuItems": { "hwp": "HWP", "pdf": "PDF" },
+      "fileNamePattern": "{title}.hwp",
+      "resultActions": {
+        "editVisibleText": "편집",
+        "editAccessibleName": "문서 편집",
+        "saveVisibleText": "저장",
+        "saveAccessibleName": "문서 저장",
+        "backVisibleText": "뒤로"
+      }
+    }
+  },
+  "studentRecords": {
+    "footer": "※ 이용중인 플랜(유료/무료)에 따라 일부 문장 완성도에 차이가 발생할 수 있습니다. 생성 결과는 반드시 검토 후 활용해 주세요.",
+    "defaultRowCount": 5,
+    "addButton": "+ 신규 학생 추가",
+    "countLabel": "현재 등록된 학생 수 : {count}명",
+    "emptyDownloadAlert": "다운로드할 유효한 학생 데이터가 없습니다.",
+    "pasteNote": "표 칸에 타이핑하면 숫자, 공백, 영문이 빠진다. fill 또는 붙여넣기로 넣고 다시 읽는다.",
+    "headerNote": "학생 열 머리글은 행발이 학생 목록, 교과 세특이 학생이다. 최종 열 안내는 행발이 선생님이, 교과 세특이 선생님께서다. 셀렉터는 이 문구를 쓰지 않고 열 순서를 쓴다.",
+    "haengbal": {
+      "defaultSeq": 108,
+      "defaultUrl": "https://mycl.io/tool/create-no-modal?seq=108&levelSelect=1",
+      "alias": {
+        "seq": 107,
+        "url": "https://mycl.io/tool/create-no-modal?seq=107",
+        "note": "도구 목록 카드. 열면 108로 넘어간다."
+      },
+      "schoolLevels": ["유치원", "초등", "중학", "고등"],
+      "grades": ["1학년", "2학년", "3학년", "4학년", "5학년", "6학년"],
+      "classPlaceholder": "예) 1, 행복",
+      "similarityOptions": ["70% 이상", "80% 이상", "90% 이상"],
+      "columns": { "number": 1, "alias": 2, "note": 3, "ai": 4, "final": 5 },
+      "topButtons": ["뒤로", "양식 다운", "일괄 등록", "샘플 입력", "내려받기", "저장", "나이스 반영하기 →"]
+    },
+    "subjectComment": {
+      "defaultSeq": 46,
+      "defaultUrl": "https://mycl.io/tool/create-no-modal?seq=46",
+      "alias": {
+        "seq": 82,
+        "url": "https://mycl.io/tool/create-no-modal?seq=82",
+        "note": "도구 목록 카드. 열면 46으로 넘어간다."
+      },
+      "schoolLevels": ["초등", "중학", "고등"],
+      "subjects": ["국어", "수학", "통합교과"],
+      "classPlaceholder": "예) 1, 명록",
+      "levelMaxLength": 5,
+      "columns": { "number": 1, "alias": 2, "performance": 3, "note": 4, "level": 5, "ai": 6, "final": 7 },
+      "topButtons": ["뒤로", "샘플 입력", "내려받기", "저장", "나이스 반영하기 →"]
+    }
+  }
+}

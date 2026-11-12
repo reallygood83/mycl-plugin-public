@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>가정통신문</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>유형</legend>
+        <label><input type="radio" name="type" value="신청" checked /> 신청</label>
+        <label><input type="radio" name="type" value="안내" /> 안내</label>
+      </fieldset>
+      <label for="title">제목</label>
+      <input id="title" name="title" placeholder="제목을 입력하세요." maxlength="50" />
+      <label for="greeting">인사말</label>
+      <textarea id="greeting" name="greeting" placeholder="인사말을 입력하세요." maxlength="100" required></textarea>
+      <label for="message">전달사항</label>
+      <textarea id="message" name="message" placeholder="전달사항을 입력하세요." maxlength="1000" required></textarea>
+      <fieldset>
+        <legend>다국어 지원 QR 생성 (제공 언어 선택)</legend>
+        <label><input type="checkbox" name="lang" value="영어" /> 영어</label>
+        <label><input type="checkbox" name="lang" value="중국어" /> 중국어</label>
+        <label><input type="checkbox" name="lang" value="베트남어" /> 베트남어</label>
+        <label><input type="checkbox" name="lang" value="태국어" /> 태국어</label>
+        <label><input type="checkbox" name="lang" value="일본어" /> 일본어</label>
+        <label><input type="checkbox" name="lang" value="캄보디아어" /> 캄보디아어</label>
+        <label><input type="checkbox" name="lang" value="필리핀어" /> 필리핀어</label>
+        <label><input type="checkbox" name="lang" value="몽골어" /> 몽골어</label>
+        <input id="custom-lang" placeholder="추가 언어 직접 입력 (쉼표(,)로 구분)" />
+      </fieldset>
+      <fieldset>
+        <legend>개인정보 제공 동의 포함 여부</legend>
+        <label><input type="radio" name="privacy" value="포함" /> 포함</label>
+        <label><input id="privacy-off" type="radio" name="privacy" value="미포함" checked /> 미포함</label>
+      </fieldset>
+      <label for="notes">기타사항 (선택)</label>
+      <textarea id="notes" name="notes" placeholder="기타사항을 입력하세요." maxlength="1000"></textarea>
+      <button type="button" id="generate">자동 생성</button>
+    </form>
+    <p id="preview" data-testid="preview" hidden>미리보기</p>
+    <button type="button" id="edit" aria-label="문서 편집" hidden>편집</button>
+    <button type="button" id="save" aria-label="문서 저장" hidden>저장</button>
+    <button type="button" id="download-open" aria-label="내려받기 옵션 열기" hidden>내려받기</button>
+    <p data-testid="save-clicks">0</p>
+    <dialog id="save-dialog" aria-label="저장하기">
+      <h2>저장하기</h2>
+      <button type="button" aria-label="닫기">×</button>
+      <p>공개 범위</p>
+      <button type="button">전체 공개</button>
+      <button type="button">우리 학교</button>
+      <button type="button">나만 보기</button>
+      <p>자료담기</p>
+      <button type="button">담기 가능</button>
+      <button type="button">담기 불가능</button>
+      <button type="button" id="save-cancel">취소</button>
+      <button type="button" id="save-confirm">저장</button>
+    </dialog>
+    <script>
+      const saveClicks = document.querySelector("[data-testid='save-clicks']");
+      document.getElementById("save-confirm").addEventListener("click", () => {
+        saveClicks.textContent = String(Number(saveClicks.textContent) + 1);
+      });
+      document.getElementById("save").addEventListener("click", () => {
+        document.getElementById("save-dialog").showModal();
+      });
+      document.getElementById("save-cancel").addEventListener("click", () => {
+        document.getElementById("save-dialog").close();
+      });
+      document.querySelector("[aria-label='닫기']").addEventListener("click", () => {
+        document.getElementById("save-dialog").close();
+      });
+      document.getElementById("generate").addEventListener("click", () => {
+        const greeting = document.getElementById("greeting").value.trim();
+        const message = document.getElementById("message").value.trim();
+        const title = document.getElementById("title").value.trim();
+        if (!greeting || !message || !title) return;
+        const url = new URL(location.href);
+        url.pathname = "/tool/create";
+        url.searchParams.set("seq", "6");
+        url.searchParams.set("librarySeq", "15");
+        history.pushState({}, "", url);
+        document.getElementById("generate").textContent = "재생성";
+        document.getElementById("preview").hidden = false;
+        for (const id of ["edit", "save", "download-open"]) document.getElementById(id).hidden = false;
+      });
+    </script>
+  </body>
+</html>

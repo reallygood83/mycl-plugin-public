@@ -1,0 +1,12 @@
+{
+  "name": "mycl-plugin",
+  "displayName": "마이클 문서",
+  "version": "1.1.0",
+  "description": "마이클(MyClass, mycl.io)의 교사용 문서 작업을 Playwright로 돕는 비공식 로컬 플러그인.",
+  "author": {
+    "name": "reallygood83"
+  },
+  "repository": "https://github.com/reallygood83/mycl-plugin-public",
+  "license": "UNLICENSED",
+  "keywords": ["mycl", "myclass", "private", "internal"]
+}

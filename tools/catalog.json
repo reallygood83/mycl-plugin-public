@@ -1,0 +1,91 @@
+{
+  "todo": "TODO: 나머지 도구는 아직 넣지 않았다.",
+  "tools": [
+    {
+      "id": "gajeong-tongsin",
+      "name": "가정통신문",
+      "summary": "학부모에게 보내는 가정통신문, 알림장, 안내문을 만든다.",
+      "seq": 6,
+      "url": "https://mycl.io/tool/create?seq=6",
+      "urlTodo": null,
+      "requiredInputs": ["인사말", "전달사항", "학교명"],
+      "requiredInputsTodo": null,
+      "requiredInputsNote": "인사말과 전달사항은 폼의 필수 항목이다. 학교명은 편집기에서 계정 기본 학교를 바꾸려면 필요하다.",
+      "skill": "mycl-gajeong-tongsin"
+    },
+    {
+      "id": "middle-eval-plan",
+      "name": "중학 평가계획서",
+      "summary": "중학교 평가계획서를 만든다.",
+      "seq": 30,
+      "url": "https://mycl.io/tool/create?seq=30",
+      "urlTodo": null,
+      "requiredInputs": [],
+      "requiredInputsTodo": "TODO: 필수 입력 항목을 아직 모른다.",
+      "requiredInputsNote": null,
+      "skill": null
+    },
+    {
+      "id": "hangeul-editor",
+      "name": "AI 한글 에디터",
+      "summary": "정해진 서식 없이 한글 문서를 AI 에디터로 쓴다.",
+      "seq": 45,
+      "url": "https://mycl.io/hceditor?seq=45",
+      "urlTodo": null,
+      "requiredInputs": [],
+      "requiredInputsTodo": "TODO: 필수 입력 항목을 아직 모른다.",
+      "requiredInputsNote": null,
+      "skill": null
+    },
+    {
+      "id": "record-haengbal",
+      "name": "생기부 행발",
+      "summary": "생기부 행동특성, 누가기록, 행발 문장을 만든다. 초등·중학·고등은 학교급으로 고른다.",
+      "seq": 108,
+      "url": "https://mycl.io/tool/create-no-modal?seq=108&levelSelect=1",
+      "urlTodo": null,
+      "aliases": [
+        {
+          "seq": 107,
+          "url": "https://mycl.io/tool/create-no-modal?seq=107",
+          "note": "도구 목록 카드. 열면 seq=108&levelSelect=1 로 넘어간다."
+        }
+      ],
+      "requiredInputs": ["행동특성 | 누가기록"],
+      "requiredInputsTodo": null,
+      "requiredInputsNote": null,
+      "skill": "mycl-haengbal"
+    },
+    {
+      "id": "subject-comment",
+      "name": "생기부 교과 세특",
+      "summary": "교과 세특, 과목별 세특 문장을 만든다. 초등, 중학, 고등은 이 페이지의 학교급으로 고른다.",
+      "seq": 46,
+      "url": "https://mycl.io/tool/create-no-modal?seq=46",
+      "urlTodo": null,
+      "aliases": [
+        {
+          "seq": 82,
+          "url": "https://mycl.io/tool/create-no-modal?seq=82",
+          "note": "도구 목록 카드. 열면 seq=46으로 넘어간다."
+        }
+      ],
+      "requiredInputs": ["교과", "평가 수준"],
+      "requiredInputsTodo": null,
+      "requiredInputsNote": "중학·고등 세특은 별도 주소가 없고 학교급으로 고른다.",
+      "skill": "mycl-subject-comment"
+    },
+    {
+      "id": "record-similarity",
+      "name": "생기부 유사도 검사",
+      "summary": "생기부 문장이 다른 문장과 얼마나 비슷한지 검사한다.",
+      "seq": 74,
+      "url": "https://mycl.io/tool/create-no-modal?seq=74",
+      "urlTodo": null,
+      "requiredInputs": [],
+      "requiredInputsTodo": "TODO: 필수 입력 항목을 아직 모른다.",
+      "requiredInputsNote": "저장된 생기부가 있어야 동작한다.",
+      "skill": null
+    }
+  ]
+}

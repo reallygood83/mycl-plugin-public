@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>편집기</title>
+  </head>
+  <body>
+    <div id="document-root">
+      <p>박달초등학교</p>
+      <p>교무실·행정실 02-3442-7783</p>
+      <p>FAX 02-3442-7793</p>
+      <p>현장학습을 안내합니다.</p>
+      <p>박달초등학교장 [직인생략]</p>
+    </div>
+    <button type="button" id="back">뒤로</button>
+    <button type="button" id="find-open">Find</button>
+    <button type="button" id="replace-open">Replace</button>
+    <dialog id="find-dialog" aria-label="Find and Replace">
+      <h2>Find and Replace</h2>
+      <button type="button">Find</button>
+      <button type="button">Replace</button>
+      <label for="find">Find what:</label>
+      <input id="find" />
+      <label for="replace">Replace with:</label>
+      <input id="replace" />
+      <label for="search">Search</label>
+      <select id="search">
+        <option selected>Whole Document</option>
+      </select>
+      <label><input type="checkbox" /> Match case</label>
+      <label><input type="checkbox" /> Match half/full width forms</label>
+      <label><input type="checkbox" /> Find Whole words only</label>
+      <label><input type="checkbox" /> Ignore punctuation</label>
+      <label><input type="checkbox" /> Ignore white-space charcters</label>
+      <button type="button" id="replace-one">Replace</button>
+      <button type="button" id="replace-all">Replace All</button>
+      <button type="button" id="find-next" disabled>Find Next</button>
+      <button type="button" id="find-cancel">Cancel</button>
+      <p id="replace-message" data-testid="replace-message"></p>
+    </dialog>
+    <button type="button" id="download-open" aria-label="내려받기 옵션 열기">내려받기</button>
+    <div id="download-menu" data-testid="download-menu" hidden></div>
+    <button type="button" id="save" aria-label="문서 저장">저장</button>
+    <button type="button" id="neis">나이스 반영하기 →</button>
+    <p data-testid="save-clicks">0</p>
+    <p data-testid="neis-clicks">0</p>
+    <script>
+      const dialog = document.getElementById("find-dialog");
+      const findInput = document.getElementById("find");
+      const findNext = document.getElementById("find-next");
+      document.getElementById("replace-open").addEventListener("click", () => {
+        dialog.show();
+      });
+      findInput.addEventListener("input", () => {
+        findNext.disabled = findInput.value.length === 0;
+      });
+      document.getElementById("replace-all").addEventListener("click", () => {
+        const find = document.getElementById("find").value;
+        const replace = document.getElementById("replace").value;
+        const root = document.getElementById("document-root");
+        if (!find) {
+          document.getElementById("replace-message").textContent = "0 items have been changed.";
+          return;
+        }
+        const parts = root.innerHTML.split(find);
+        const count = parts.length - 1;
+        root.innerHTML = parts.join(replace);
+        document.getElementById("replace-message").textContent =
+          count + " items have been changed.";
+      });
+
+      const formats = new URLSearchParams(location.search).get("formats") || "hwp,pdf";
+      const menu = document.getElementById("download-menu");
+      function addItem(label, filename, content) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = label;
+        button.addEventListener("click", () => {
+          const anchor = document.createElement("a");
+          anchor.href = URL.createObjectURL(new Blob([content]));
+          anchor.download = filename;
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+        });
+        menu.appendChild(button);
+      }
+      if (formats.split(",").includes("hwp")) {
+        addItem("HWP", "notice.hwp", "fake-hwp");
+      }
+      if (formats.split(",").includes("pdf")) {
+        addItem("PDF", "notice.pdf", "fake-pdf");
+      }
+      document.getElementById("download-open").addEventListener("click", () => {
+        menu.hidden = false;
+      });
+
+      document.getElementById("save").addEventListener("click", () => {
+        const node = document.querySelector("[data-testid='save-clicks']");
+        node.textContent = String(Number(node.textContent) + 1);
+      });
+      document.getElementById("neis").addEventListener("click", () => {
+        const node = document.querySelector("[data-testid='neis-clicks']");
+        node.textContent = String(Number(node.textContent) + 1);
+      });
+    </script>
+  </body>
+</html>

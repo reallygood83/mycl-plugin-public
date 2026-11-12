@@ -1,0 +1,21 @@
+{
+  "name": "mycl-plugin",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Private internal MyClass (mycl.io) document plugin. Not for public distribution.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "login": "node scripts/login.mjs",
+    "key:setup": "node scripts/setup-key.mjs",
+    "key:status": "node scripts/mycl.mjs key status",
+    "key:reset": "node scripts/mycl.mjs key reset",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.56.0"
+  }
+}

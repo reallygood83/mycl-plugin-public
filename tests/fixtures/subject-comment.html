@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>생기부 초등 교과 세특</title>
+  </head>
+  <body data-kind="subject-comment">
+    <h1>생기부 초등 교과 세특</h1>
+    <label for="level">학교급</label>
+    <select id="level"><option selected>초등</option><option>중학</option><option>고등</option></select>
+    <label for="grade">학년</label>
+    <select id="grade"><option>1학년</option><option>2학년</option><option>3학년</option><option>4학년</option><option>5학년</option><option>6학년</option></select>
+    <label for="class-name">반</label>
+    <input id="class-name" placeholder="예) 1, 명록" />
+    <label for="subject">교과</label>
+    <select id="subject"><option value="">교과 선택</option><option>국어</option><option>수학</option><option>통합교과</option></select>
+    <label for="similarity">유사도</label>
+    <select id="similarity"><option>70% 이상</option><option>80% 이상</option><option>90% 이상</option></select>
+    <p>
+      <button type="button">뒤로</button>
+      <button type="button" id="download">내려받기</button>
+      <button type="button">저장</button>
+      <button type="button">나이스 반영하기 →</button>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>학생</th>
+          <th>이름</th>
+          <th>수행평가 기록 입력</th>
+          <th>누가기록 입력</th>
+          <th>평가 수준</th>
+          <th>AI 생성 문장</th>
+          <th>선생님께서 확인하는 최종 문장</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <input type="number" value="1" />
+    <button type="button" id="add">+ 신규 학생 추가</button>
+    <p id="count">현재 등록된 학생 수 : 5명</p>
+    <button type="button" id="generate">전체 생성</button>
+    <button type="button" id="paste-all">전체 붙여넣기</button>
+    <button type="button" id="similarity-check">유사도 검사</button>
+    <p data-testid="plan-notice">※ 이용중인 플랜(유료/무료)에 따라 일부 문장 완성도에 차이가 발생할 수 있습니다. 생성 결과는 반드시 검토 후 활용해 주세요.</p>
+    <p id="alert" data-testid="alert" hidden></p>
+    <template id="row-template">
+      <tr data-row="">
+        <td><input maxlength="5" /></td>
+        <td><input /></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><input maxlength="5" /></td>
+        <td><textarea readonly></textarea><span>0</span></td>
+        <td><textarea></textarea></td>
+      </tr>
+    </template>
+    <script>
+      const rows = document.getElementById("rows");
+      const template = document.getElementById("row-template");
+      function stripTyping(event) {
+        if (event.key.length === 1 && /[0-9A-Za-z ]/.test(event.key)) event.preventDefault();
+      }
+      function bind(row) {
+        for (const cell of [0, 1, 2, 3, 4]) {
+          row.children[cell].querySelector("input, textarea").addEventListener("keydown", stripTyping);
+        }
+      }
+      function addRow() {
+        const row = template.content.firstElementChild.cloneNode(true);
+        row.dataset.row = String(rows.children.length);
+        bind(row);
+        rows.append(row);
+      }
+      for (let index = 0; index < 5; index += 1) addRow();
+      document.getElementById("add").addEventListener("click", () => {
+        const extra = Number(document.getElementById("add").previousElementSibling.value || "1");
+        for (let index = 0; index < extra; index += 1) addRow();
+        document.getElementById("count").textContent = "현재 등록된 학생 수 : " + rows.children.length + "명";
+      });
+      document.getElementById("download").addEventListener("click", () => {
+        const ready = [...rows.children].some((row) => row.children[5].querySelector("textarea").value.trim());
+        if (!ready) document.getElementById("alert").textContent = "다운로드할 유효한 학생 데이터가 없습니다.";
+      });
+      document.getElementById("generate").addEventListener("click", () => {
+        for (const row of rows.children) {
+          const performance = row.children[2].querySelector("textarea").value.trim();
+          const note = row.children[3].querySelector("textarea").value.trim();
+          const level = row.children[4].querySelector("input").value.trim();
+          if (!level || (!performance && !note)) continue;
+          const sentence = [performance, note].filter(Boolean).join(" ");
+          row.children[5].querySelector("textarea").value = sentence;
+          row.children[5].querySelector("span").textContent = String(new TextEncoder().encode(sentence).length);
+        }
+      });
+    </script>
+  </body>
+</html>

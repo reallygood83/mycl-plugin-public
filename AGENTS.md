@@ -1,0 +1,33 @@
+# 마이클 플러그인 규칙
+
+이 저장소는 테크빌교육 마이클(MyClass, mycl.io)의 교사용 문서 작업을 Claude Code와 Codex에서 돕는 비공식 로컬 플러그인이다. GitHub에서 소스를 배포하며 플러그인 마켓플레이스에는 등록하지 않는다.
+
+Codex 는 `.agents/skills` 의 스킬을 쓴다. 그 디렉터리는 `skills/` 의 같은 파일을 가리킨다. 브라우저 작업 전에 해당 `SKILL.md` 와 `scripts/selectors.json` 을 읽는다.
+
+- `mycl-router`: 평문 요청을 도구로 고르고, 스킬이 있으면 그 스킬로 넘긴다
+- `mycl-login-check`: 로그인 확인
+- `mycl-gajeong-tongsin`: 가정통신문 작성, 찾기/바꾸기, 내려받기
+- `mycl-haengbal`: 생기부 행발. 주소는 seq=108이고 seq=107은 별칭이다
+- `mycl-subject-comment`: 교과 세특. 주소는 seq=46이고 seq=82는 별칭이다. 중학·고등은 학교급으로 고른다
+
+도구가 분명하지 않으면 `node scripts/route.mjs --prompt "..."` 를 먼저 실행한다. Jev 키 값은 읽지 않는다. 상태는 `node scripts/mycl.mjs key status` 의 끝 네 자리만 본다. 키가 없거나 호출이 실패하면 `tools/catalog.json` 을 보고 사람이 고른다. 카탈로그에 없는 주소는 만들지 않는다.
+
+## 절대 규칙
+
+- 「저장」과 접근성 이름 「문서 저장」은 누르지 않는다. 문서함 저장 창은 전체 공개가 기본이다. 창이 열리면 「취소」 또는 접근성 이름 「닫기」만 누른다.
+- 「나이스 반영하기 →」, 「일괄 등록」, 「유사도 검사」는 누르지 않는다.
+- 공유, 발송, 결제, 구독 변경, 가입, 삭제는 사용자가 대화에서 확인한 뒤에만 한다.
+- 클릭 전에 `node scripts/check-click.mjs "접근 가능한 이름"` 을 실행한다. 종료 코드가 0이 아니면 누르지 않는다. 저장과 나이스 반영은 `--confirmed` 를 줘도 거절한다. 이 스크립트는 금지 목록이다. 절차에 없는 버튼은 통과해도 누르지 않는다.
+- 학생 실명과 민감정보를 폼이나 문서에 넣지 않는다.
+- 비밀번호, 세션, storageState, 쿠키, 브라우저 프로필, `out/` 의 내려받은 파일을 커밋하지 않는다. `browser_storage_state` 로 세션을 저장소에 쓰지 않는다.
+- `/signup?key=…` 또는 `/landing#pricing` 으로 이동하면 로그인 실패다. 가입과 결제를 진행하지 않고 사람에게 `npm run login` 을 요청한다.
+- 공식 표기는 마이클 / MyClass, 도메인은 mycl.io 다.
+- `browser_run_code_unsafe` 는 쓰지 않는다.
+
+## 로그인
+
+프로필은 `~/.mycl-profile` 이다. 비밀번호는 `scripts/login.mjs` 도, 에이전트도 받지 않는다. 사람이 화면이 있는 컴퓨터의 브라우저 창에서 직접 로그인한다. 같은 프로필은 브라우저 하나에서만 연다.
+
+## 검증
+
+의존성을 설치한 뒤 `npm test` 를 실행한다. 테스트는 가짜 HTML 만 쓰고 mycl.io 에 로그인하지 않는다.
