@@ -5,7 +5,7 @@ description: "마이클 생기부 행발(행동특성, 누가기록) 문장을 �
 
 # 생기부 행발
 
-공식 표기는 마이클 / MyClass, 도메인은 mycl.io 다. 비공개 내부용이다.
+Codex 한 줄 설치에서는 `mycl-browser`를 쓰고, 보조 파일과 스크립트는 `~/.local/share/mycl-plugin`을 기준으로 읽거나 실행한다. 수동 설치는 클론 폴더를 기준으로 삼는다. 브라우저 작업 전에 `mycl-login-check`를 따른다.
 
 문구와 열 순서는 `scripts/selectors.json` 의 `studentRecords.haengbal` 이다. 학생 열 머리글이나 「선생님이」 같은 문장으로 칸을 찾지 않는다. 표의 칸은 왼쪽부터 번호, 가명, 누가기록, AI 생성 문장, 최종 문장이다.
 

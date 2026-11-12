@@ -8,6 +8,24 @@
 
 로그인 확인, 가정통신문(`seq=6`), 그리고 평문 요청을 도구로 고르는 라우터까지 있다. 이 저장소의 테스트는 가짜 HTML 과 가짜 Jev 응답으로 돌리고, 실계정과 실제 Jev 에는 접속하지 않는다.
 
+## Codex 한 줄 설치
+
+**macOS**에서 Codex CLI, Node.js 20 이상, Git이 필요하다. 터미널에서 `codex --version`이 실행되지 않으면 [Codex CLI 설치 안내](https://learn.chatgpt.com/docs/cli)를 먼저 따른다. Codex 데스크톱 앱을 쓰는 경우에도 이 설치 명령에는 CLI가 필요하다.
+
+터미널에 이 한 줄을 붙여 넣는다.
+
+```bash
+installer="$(curl -fsSL https://raw.githubusercontent.com/reallygood83/mycl-plugin-public/main/install.sh)" && bash -c "$installer"
+```
+
+1. 설치가 끝나면 열린 Chromium 창에서 **본인 티처빌 계정으로 직접 로그인**한다. 비밀번호는 채팅에 입력하지 않는다.
+2. 로그인 창이 닫힌 뒤 Codex에서 새 세션을 시작한다. 데스크톱 앱이 설치 중 열려 있었다면 앱을 다시 연다.
+3. Codex에 **“마이클 로그인 확인해 줘”**라고 입력한다. 로그인이 확인되면 **“마이클로 현장체험학습 가정통신문 초안을 만들어 줘”**로 시작할 수 있다.
+
+업데이트할 때는 같은 명령을 다시 실행한다. 이미 로그인했다면 위 명령의 끝에 ` -- --no-login`을 붙여 로그인 창을 건너뛸 수 있다. 세션이 만료되면 기존 Codex 세션에서 마이클 브라우저를 닫고 `npm --prefix "$HOME/.local/share/mycl-plugin" run login`으로 다시 로그인한다.
+
+설치 파일은 `~/.local/share/mycl-plugin`, Codex 스킬은 `~/.agents/skills`, 티처빌 로그인은 `~/.mycl-profile`에 둔다. 다른 MCP 설정은 유지한다. `codex mcp list`에서 `mycl-browser` 등록을 확인할 수 있다. 마이클의 문서 도구는 계정 권한에 따라 이용 범위가 달라질 수 있다.
+
 ## 들어 있는 것
 
 | 경로 | 역할 |
@@ -43,19 +61,7 @@ ln -s /절대경로/mycl-plugin ~/.claude/skills/mycl-plugin
 
 Playwright MCP 는 헤드 모드가 기본이다. `--headless`, `--isolated`, `--storage-state`, `--save-session` 은 넣지 않는다. 세션을 메모리에만 두거나 워크스페이스에 쿠키를 쓰면 안 된다.
 
-## Codex
-
-스킬 위치는 [Build skills](https://learn.chatgpt.com/docs/build-skills.md) 의 저장소 경로 `.agents/skills` 를 따른다. Claude Code 의 기본 경로는 `skills/` 라서, 본문은 `skills/` 에 두고 `.agents/skills` 가 그 디렉터리를 가리킨다. 링크가 풀리지 않으면 두 폴더가 같은 `SKILL.md` 를 보게 다시 연결한다. 예전 실험 문서의 `~/.codex/skills` 와는 다르게 저장소 스킬로 둔다.
-
-MCP 는 [config reference](https://learn.chatgpt.com/docs/config-file/config-reference) 의 `[mcp_servers.<이름>]` 과 [Playwright 의 Codex 예시](https://playwright.dev/mcp/clients/other-clients) 를 따른다. `args` 는 셸을 거치지 않아서 `~` 가 펼쳐지지 않는다. 예시 파일의 경로를 절대 경로로 바꾼 뒤 `~/.codex/config.toml` 에 합치고 Codex 를 다시 연다.
-
-```bash
-node scripts/login.mjs --print-profile
-```
-
-프로젝트 안의 `.codex/config.toml` 로 복사하지 않는다. 저장소를 trust 하면 그 파일이 바로 적용된다.
-
-## 처음 한 번, 사람이 로그인
+## Claude Code 수동 설치와 로그인
 
 에이전트는 비밀번호를 받지 않는다. 화면이 있는 컴퓨터에서 한 번만 직접 로그인한다.
 

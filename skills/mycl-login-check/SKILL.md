@@ -5,7 +5,7 @@ description: "마이클(mycl.io)에 로그인돼 있는지 확인한다. 입구�
 
 # 마이클 로그인 확인
 
-공식 표기는 마이클 / MyClass 이고 도메인은 mycl.io 다. 공개 배포, 마켓플레이스 등록, 저장소 공개 전환은 하지 않는다.
+공식 표기는 마이클 / MyClass이고 도메인은 mycl.io다. Codex 한 줄 설치에서는 Playwright MCP 이름이 `mycl-browser`다. Codex에서 상대 경로의 보조 파일을 읽거나 명령을 실행할 때는 `~/.local/share/mycl-plugin`을 작업 폴더로 쓴다. 수동 설치는 클론한 폴더를 쓴다.
 
 문구의 기준 파일은 `scripts/selectors.json` 이다. 화면과 다르면 그 파일을 고치고, 맞는 문구를 확인하기 전에는 추측해서 가입·결제 버튼을 누르지 않는다.
 
@@ -28,12 +28,10 @@ description: "마이클(mycl.io)에 로그인돼 있는지 확인한다. 입구�
 4. 실패로 보는 주소
    - 호스트가 mycl.io 이고 경로가 `/signup` 으로 시작한다.
    - 호스트가 mycl.io 이고 경로가 `/landing` 으로 시작한다. `#pricing` 이 붙어 있으면 요금제 화면이다.
-5. 실패이거나 티처빌 로그인 페이지에 머무르면 아무 버튼도 누르지 않는다. 가입, 결제, 구독, 요금제 시작을 누르지 않는다. 사용자에게 화면이 있는 컴퓨터에서 아래를 실행해 직접 로그인해 달라고 한다.
+5. 실패이거나 티처빌 로그인 페이지에 머무르면 아무 버튼도 누르지 않는다. 가입, 결제, 구독, 요금제 시작을 누르지 않는다. 해당 브라우저를 닫고 사용자에게 화면이 있는 컴퓨터에서 직접 로그인해 달라고 한다. Codex 한 줄 설치에서는 아래 명령을 쓴다. 수동 설치는 클론 폴더에서 `npm run login`을 실행한다.
 
 ```bash
-npm install
-npx playwright install chromium
-npm run login
+npm --prefix "$HOME/.local/share/mycl-plugin" run login
 ```
 
 6. 호스트가 mycl.io 이고 위의 실패 경로가 아니면 로그인된 것으로 보고한다. 비밀번호는 다루지 않는다.

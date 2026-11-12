@@ -5,7 +5,7 @@ description: "마이클(mycl.io) 가정통신문을 만든다. https://mycl.io/t
 
 # 마이클 가정통신문
 
-공식 표기는 마이클 / MyClass 이고 도메인은 mycl.io 다. 이 플러그인은 비공개 내부용이다. 공개 배포, 마켓플레이스 등록, 저장소 공개 전환은 하지 않는다.
+Codex 한 줄 설치에서는 `mycl-browser` 도구를 쓰고, 보조 파일과 스크립트는 `~/.local/share/mycl-plugin`을 기준으로 읽거나 실행한다. 수동 설치는 클론 폴더를 기준으로 삼는다.
 
 먼저 `mycl-login-check` 를 따른다. 로그인 실패면 문서를 만들지 않는다.
 
