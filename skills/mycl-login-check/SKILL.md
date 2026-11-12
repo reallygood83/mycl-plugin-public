@@ -28,11 +28,10 @@ description: "마이클(mycl.io)에 로그인돼 있는지 확인한다. 입구�
 4. 실패로 보는 주소
    - 호스트가 mycl.io 이고 경로가 `/signup` 으로 시작한다.
    - 호스트가 mycl.io 이고 경로가 `/landing` 으로 시작한다. `#pricing` 이 붙어 있으면 요금제 화면이다.
-5. 실패이거나 티처빌 로그인 페이지에 머무르면 아무 버튼도 누르지 않는다. 가입, 결제, 구독, 요금제 시작을 누르지 않는다. 해당 브라우저를 닫고 사용자에게 화면이 있는 컴퓨터에서 직접 로그인해 달라고 한다. Codex 한 줄 설치에서는 아래 명령을 쓴다. 수동 설치는 클론 폴더에서 `npm run login`을 실행한다.
-
-```bash
-npm --prefix "$HOME/.local/share/mycl-plugin" run login
-```
+5. 실패이거나 티처빌 로그인 페이지에 머무르면 아무 버튼도 누르지 않는다. 가입, 결제, 구독, 요금제 시작을 누르지 않는다. 해당 브라우저를 닫고 사용자에게 화면이 있는 컴퓨터에서 직접 로그인해 달라고 한다.
+   - Windows PowerShell: `npm.cmd --prefix "$env:USERPROFILE\.local\share\mycl-plugin" run login`
+   - macOS 터미널: `npm --prefix "$HOME/.local/share/mycl-plugin" run login`
+   - 수동 설치: 클론 폴더에서 `npm run login`
 
 6. 호스트가 mycl.io 이고 위의 실패 경로가 아니면 로그인된 것으로 보고한다. 비밀번호는 다루지 않는다.
 

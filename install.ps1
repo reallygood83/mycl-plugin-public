@@ -22,7 +22,8 @@ $git = Get-Program git.exe
 $node = Get-Program node.exe
 $npm = Get-Program npm.cmd
 $codex = Get-Program codex
-if ([int](& $node -p 'process.versions.node.split(".")[0]') -lt 20) {
+$nodeVersion = Invoke-Checked $node @('--version')
+if ($nodeVersion -notmatch '^v(\d+)\.' -or [int]$Matches[1] -lt 20) {
     throw 'Install Node.js 20 or newer, then run the installer again.'
 }
 

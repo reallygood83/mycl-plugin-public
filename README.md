@@ -10,9 +10,15 @@
 
 ## Codex 한 줄 설치
 
-**macOS**에서 Codex CLI, Node.js 20 이상, Git이 필요하다. 터미널에서 `codex --version`이 실행되지 않으면 [Codex CLI 설치 안내](https://learn.chatgpt.com/docs/cli)를 먼저 따른다. Codex 데스크톱 앱을 쓰는 경우에도 이 설치 명령에는 CLI가 필요하다.
+**Windows 또는 macOS**에서 Codex CLI, Node.js 20 이상, Git이 필요하다. 터미널에서 `codex --version`이 실행되지 않으면 [Codex CLI 설치 안내](https://learn.chatgpt.com/docs/cli)를 먼저 따른다. Codex 데스크톱 앱을 쓰는 경우에도 이 설치 명령에는 CLI가 필요하다.
 
-터미널에 이 한 줄을 붙여 넣는다.
+**Windows:** PowerShell을 열어 아래 한 줄을 붙여 넣는다. 관리자 권한은 필요 없다. Git Bash나 WSL을 열 필요도 없다.
+
+```powershell
+& ([scriptblock]::Create((Invoke-RestMethod 'https://raw.githubusercontent.com/reallygood83/mycl-plugin-public/main/install.ps1')))
+```
+
+**macOS:** 터미널을 열어 아래 한 줄을 붙여 넣는다.
 
 ```bash
 installer="$(curl -fsSL https://raw.githubusercontent.com/reallygood83/mycl-plugin-public/main/install.sh)" && bash -c "$installer"
@@ -22,7 +28,12 @@ installer="$(curl -fsSL https://raw.githubusercontent.com/reallygood83/mycl-plug
 2. 로그인 창이 닫힌 뒤 Codex에서 새 세션을 시작한다. 데스크톱 앱이 설치 중 열려 있었다면 앱을 다시 연다.
 3. Codex에 **“마이클 로그인 확인해 줘”**라고 입력한다. 로그인이 확인되면 **“마이클로 현장체험학습 가정통신문 초안을 만들어 줘”**로 시작할 수 있다.
 
-업데이트할 때는 같은 명령을 다시 실행한다. 이미 로그인했다면 위 명령의 끝에 ` -- --no-login`을 붙여 로그인 창을 건너뛸 수 있다. 세션이 만료되면 기존 Codex 세션에서 마이클 브라우저를 닫고 `npm --prefix "$HOME/.local/share/mycl-plugin" run login`으로 다시 로그인한다.
+업데이트할 때는 설치 명령을 다시 실행한다. 이미 로그인했다면 명령 끝에 Windows는 ` -NoLogin`, macOS는 ` -- --no-login`을 붙여 로그인 창을 건너뛸 수 있다.
+
+세션이 만료되면 기존 Codex 세션의 마이클 브라우저를 닫고 다시 로그인한다.
+
+- Windows: `npm.cmd --prefix "$env:USERPROFILE\.local\share\mycl-plugin" run login`
+- macOS: `npm --prefix "$HOME/.local/share/mycl-plugin" run login`
 
 설치 파일은 `~/.local/share/mycl-plugin`, Codex 스킬은 `~/.agents/skills`, 티처빌 로그인은 `~/.mycl-profile`에 둔다. 다른 MCP 설정은 유지한다. `codex mcp list`에서 `mycl-browser` 등록을 확인할 수 있다. 마이클의 문서 도구는 계정 권한에 따라 이용 범위가 달라질 수 있다.
 
