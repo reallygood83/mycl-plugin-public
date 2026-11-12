@@ -1,0 +1,52 @@
+name: Windows installer
+
+on:
+  push:
+    paths:
+      - 'install.ps1'
+      - 'package*.json'
+      - 'skills/**'
+      - 'tests/windows-install-smoke.mjs'
+      - '.github/workflows/windows-install.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: windows-2025
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex@0.167.2
+      - name: Install and reinstall using Windows PowerShell
+        shell: powershell
+        run: |
+          $teacher = Join-Path $env:RUNNER_TEMP 'MyCL teacher'
+          $env:USERPROFILE = $teacher
+          $env:HOME = $teacher
+          $env:CODEX_HOME = Join-Path $teacher '.codex'
+          New-Item -ItemType Directory -Force $env:CODEX_HOME | Out-Null
+          codex.cmd mcp add existing-check -- cmd.exe /c exit 0
+          if ($LASTEXITCODE -ne 0) { throw 'Could not seed unrelated Codex settings.' }
+          $fixture = Join-Path $env:RUNNER_TEMP 'mycl-fixture.git'
+          git clone --bare . $fixture
+          if ($LASTEXITCODE -ne 0) { throw 'Could not prepare the fixture clone.' }
+          git --git-dir=$fixture update-ref refs/heads/main $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'Could not set the fixture branch.' }
+          $env:GIT_CONFIG_COUNT = '1'
+          $env:GIT_CONFIG_KEY_0 = "url.$(([Uri]$fixture).AbsoluteUri).insteadOf"
+          $env:GIT_CONFIG_VALUE_0 = 'https://github.com/reallygood83/mycl-plugin-public.git'
+          $source = Invoke-RestMethod "https://raw.githubusercontent.com/$env:GITHUB_REPOSITORY/$env:GITHUB_SHA/install.ps1"
+          & ([scriptblock]::Create($source)) -NoLogin
+          & ([scriptblock]::Create($source)) -NoLogin
+          $launcher = Join-Path (npm.cmd root -g) '@openai/codex/bin/codex.js'
+          node.exe tests/windows-install-smoke.mjs $launcher
+          if ($LASTEXITCODE -ne 0) { throw 'Windows installer smoke test failed.' }
