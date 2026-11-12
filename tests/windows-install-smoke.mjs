@@ -71,7 +71,10 @@ try {
     const result = await codex.call("skills/list", { cwds: [workDir], forceReload: true });
     const discovered = result.data[0].skills.filter(skill => skill.enabled && skill.scope === "user");
     for (const name of skills) {
-      assert.ok(discovered.some(skill => realpathSync(skill.path) === path.join(installDir, "skills", name, "SKILL.md")), name);
+      assert.ok(
+        discovered.some(skill => realpathSync(skill.path) === path.join(installDir, "skills", name, "SKILL.md")),
+        `Skill not discovered: ${name}; found: ${discovered.map(skill => skill.path).join(", ")}; errors: ${JSON.stringify(result.data[0].errors)}`,
+      );
     }
     console.log("Codex discovered all five MyClass skills from an unrelated folder.");
   } finally { codex.close(); }

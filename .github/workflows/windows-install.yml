@@ -29,10 +29,7 @@ jobs:
       - name: Install and reinstall using Windows PowerShell
         shell: powershell
         run: |
-          $teacher = Join-Path $env:RUNNER_TEMP 'MyCL teacher'
-          $env:USERPROFILE = $teacher
-          $env:HOME = $teacher
-          $env:CODEX_HOME = Join-Path $teacher '.codex'
+          $env:CODEX_HOME = Join-Path $env:RUNNER_TEMP 'MyCL Codex'
           New-Item -ItemType Directory -Force $env:CODEX_HOME | Out-Null
           codex.cmd mcp add existing-check -- cmd.exe /c exit 0
           if ($LASTEXITCODE -ne 0) { throw 'Could not seed unrelated Codex settings.' }
