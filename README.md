@@ -1,5 +1,7 @@
 # 마이클 문서 플러그인
 
+**만든 사람 · 배움의 달인** — [X (@reallygood83)](https://x.com/reallygood83) · [YouTube (배움의 달인)](https://www.youtube.com/@%EB%B0%B0%EC%9B%80%EC%9D%98%EB%8B%AC%EC%9D%B8-p5v)
+
 마이클(MyClass, [mycl.io](https://mycl.io))에서 하는 교사용 문서 작업을 Claude Code와 Codex로 돕는 비공식 로컬 플러그인이다. 테크빌교육의 공식 제품이 아니며, 사용자는 자신의 티처빌 계정으로 직접 로그인한다. GitHub에서 받아 설치하며 ChatGPT 웹이나 공식 플러그인 디렉터리에는 등록되어 있지 않다.
 
 마이클에는 공개 API 가 없다. 브라우저는 [Playwright MCP](https://github.com/microsoft/playwright-mcp) 로 다루고, 로그인 세션은 `~/.mycl-profile` 에만 남긴다.
